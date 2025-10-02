@@ -14,7 +14,18 @@ update_os
 
 JAVA_VERSION="21" setup_java
 PG_VERSION="17" setup_postgresql
-fetch_and_deploy_gh_release "sonarqube" "SonarSource/sonarqube" "prebuild" "latest" "/opt/sonarqube" "sonarqube-*.zip"
+fetch_and_deploy_gh_release "sonarqube" "SonarSource/sonarqube" "tarball"
+
+msg_info "Building SonarQube from source"
+cd /opt/sonarqube
+$STD ./gradlew build -x test
+SONAR_ZIP=$(find sonar-application/build/distributions -name "sonarqube-*.zip" | head -n1)
+TEMP_BUILD=$(mktemp -d)
+unzip -q "$SONAR_ZIP" -d "$TEMP_BUILD"
+rm -rf /opt/sonarqube/*
+cp -r "$TEMP_BUILD"/sonarqube-*/* /opt/sonarqube/
+rm -rf "$TEMP_BUILD"
+msg_ok "Built SonarQube"
 
 msg_info "Installing Postgresql"
 DB_NAME="sonarqube"
