@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-source <(curl -fsSL  https://git.community-scripts.org/community-scripts/ProxmoxVED/raw/branch/main/misc/build.func)
+source <(curl -s https://raw.githubusercontent.com/prop4n/ProxmoxVED/refs/heads/fix-sonarqube-use-prebuild/misc/build.func)
 # Copyright (c) 2021-2025 community-scripts ORG
 # Author: prop4n
 # License: MIT | https://github.com/community-scripts/ProxmoxVE/raw/main/LICENSE
@@ -47,7 +47,7 @@ function update_script() {
       rm -rf ${BACKUP_DIR}
       chown -R sonarqube:sonarqube /opt/sonarqube
       msg_ok "Backup restored"
-      
+
       msg_info "Starting service"
       systemctl start sonarqube
       msg_ok "Service started"

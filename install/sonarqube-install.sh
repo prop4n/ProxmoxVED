@@ -14,7 +14,7 @@ update_os
 
 JAVA_VERSION="21" setup_java
 PG_VERSION="17" setup_postgresql
-fetch_and_deploy_gh_release "sonarqube" "SonarSource/sonarqube" "tarball"
+fetch_and_deploy_gh_release "sonarqube" "SonarSource/sonarqube" "prebuild" "latest" "/opt/sonarqube" "sonarqube-*.zip"
 
 msg_info "Installing Postgresql"
 DB_NAME="sonarqube"
@@ -35,7 +35,7 @@ $STD useradd -r -m -U -d /opt/sonarqube -s /bin/bash sonarqube
 chown -R sonarqube:sonarqube /opt/sonarqube
 chmod -R 755 /opt/sonarqube
 mkdir -p /opt/sonarqube/conf
-cat <<EOF >/opt/sonarqube/conf/sonar.properties 
+cat <<EOF >/opt/sonarqube/conf/sonar.properties
 sonar.jdbc.username=${DB_USER}
 sonar.jdbc.password=${DB_PASS}
 sonar.jdbc.url=jdbc:postgresql://localhost/${DB_NAME}
