@@ -19,7 +19,7 @@ fetch_and_deploy_gh_release "sonarqube" "SonarSource/sonarqube" "tarball"
 msg_info "Building SonarQube from source"
 cd /opt/sonarqube
 $STD ./gradlew build -x test
-SONAR_ZIP=$(find sonar-application/build/distributions -name "sonarqube-*.zip" | head -n1)
+SONAR_ZIP=$(find sonar-application/build/distributions -name "sonar-application-*.zip" | head -n1)
 TEMP_BUILD=$(mktemp -d)
 unzip -q "$SONAR_ZIP" -d "$TEMP_BUILD"
 rm -rf /opt/sonarqube/*
